@@ -1,0 +1,52 @@
+<html>
+<head>
+  <title>Art / Dev - Collaboration 3</title>
+  <script src="p5.min.js"></script>
+  <script>
+
+  //=============== DO ALL YOUR WORK HERE =======================
+
+
+  function setup() {
+      createCanvas(windowWidth, windowHeight); // don't change this
+
+      grass();
+  }
+
+  function grass() {
+      strokeWeight(3);
+      noFill();
+
+      var max = 50;
+      var f = 20;
+      var start = max / 2 * -1;
+
+      for(var i=0; i < max; i++) {
+          stroke(100, 150 + noise(i) * 100, 100);
+          var negative = random() > .5 ? 1 : -1;
+
+          var x1 = start + i * f, y1 = windowHeight - 10;
+          var cx1 = x1 + noise(i) * f * negative, cy1 = windowHeight / 3 + noise(i) * f;
+          var cx2 = x1 + noise(i) * f, cy2 = windowHeight / 4 + noise(i) * f * negative;
+
+          var x2 = x1 + noise(i) * f * 2 * negative, y2 = windowHeight / 5;
+
+          bezier(x1, y1, cx1, cy1, cx2, cy2, x2, y2);
+      }
+  }
+
+  function draw() {
+
+  }
+
+  // =============== STOP WORKING HERE ==========================
+
+  </script>
+  <style>
+    body { padding: 0; margin: 0; background-color: #333;}
+    canvas { margin: 0; }
+  </style>
+</head>
+<body>
+</body>
+</html>
