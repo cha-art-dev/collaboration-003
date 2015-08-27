@@ -1,0 +1,129 @@
+<html>
+<head>
+  <title>Art / Dev - Collaboration 3</title>
+  <script src="p5.min.js"></script>
+  <script>
+
+  //=============== DO ALL YOUR WORK HERE =======================
+  var IMAGE_WIDTH = 640;    // Don't change this.
+  var IMAGE_HEIGHT = 540;   // Don't change this.
+
+  var colors = [
+    [255,0,0],//red
+    [255,128,0],//orange
+    [255,255,0],//yellow
+    [0,255,0],//green
+    [0,0,255],//blue
+    [128,0,255]//purple
+  ];
+  
+  var slices = 20;
+  //var points = [{x: 50,y: 100},{x: 200,y: 100},{x: 200,y: 500},{x: 50,y: 500}];
+  var o = {x:IMAGE_WIDTH/2,y:3*IMAGE_HEIGHT/5};
+  //var points = [{x: 50,y: 100},{x: 200,y: 100},{x: 200,y: 500},{x: o.x,y: o.y}];
+  var orbit = 70;//radius of orbit
+  var petals = 6;
+  var pheight = 100;
+  var plength = 300;
+  var perspective = 0.6;
+
+  function setup() {
+    createCanvas(IMAGE_WIDTH, IMAGE_HEIGHT); // don't change this
+    noFill();
+    background(255);
+    strokeWeight(3);
+    //var ang = TWO_PI*p/slices;
+    for (var p=0; p < petals; p++){
+      var angP = TWO_PI*(p+0.3)/petals;
+      stroke(colors[p][0],colors[p][1],colors[p][2]);
+      for (var i = 0; i < slices; i++) {
+        var angI = TWO_PI*i/slices;
+        //ellipse((IMAGE_WIDTH/2+sin(ang)*orbit), (IMAGE_HEIGHT/2+cos(ang)*orbit),rad,rad);
+        //bezier(points[0].x, points[0].y,(points[0].x+sin(angI)*orbit), (points[0].y+cos(angI)*orbit),(points[3].x+sin(angP)*orbit), (points[3].y+cos(angP)*orbit),points[3].x, points[3].y);
+        bezier((o.x+sin(angP)*plength), (o.y+cos(angP)*perspective*plength-pheight),(o.x+sin(angI)*orbit), (o.y+cos(angI)*orbit),(o.x+sin(angP)*plength), (o.y+cos(angP)*perspective*plength),o.x, o.y);
+
+      }
+    }
+    noStroke();
+    fill(255);
+    ellipse(o.x,o.y,20,(20*perspective));
+
+  }
+
+
+  /*
+  var time = 0;
+  var lastTime = 0;
+  var points = [{x: 50,y: 100},{x: 200,y: 100},{x: 200,y: 500},{x: 50,y: 500}];
+  var rad = 100;
+  var selected = -1;
+  var shade = 255;//102
+  var orbit = 200;//radius of orbit
+  var orbitSpeed = 0.01;
+  var slices = 100;
+
+  function setup() {
+    createCanvas(IMAGE_WIDTH, IMAGE_HEIGHT); // don't change this
+    fill(100);
+    //noFill();
+    background(255);
+    //var ang = TWO_PI*p/slices;
+    for (var i = 0; i < slices/2; i++) {
+      var ang = TWO_PI*i/slices;
+      ellipse((IMAGE_WIDTH/2+sin(ang)*orbit), (IMAGE_HEIGHT/2+cos(ang)*orbit),rad,rad);
+    }
+    for (var i = slices/2; i < slices+1; i++) {
+      var ang = TWO_PI*i/slices-PI;
+      ellipse((IMAGE_WIDTH/2-sin(ang)*orbit), (IMAGE_HEIGHT/2+cos(ang)*orbit),rad,rad);
+    }
+  }
+
+  function draw() {
+    //clear();
+    //background(shade,shade,shade,5);
+
+    lastTime = time;
+    time = millis();
+    dt = time-lastTime;
+
+    //curveTightness(noise(time/1000)*40 - 20);
+    //curve(points[0].x, points[0].y,points[1].x, points[1].y,points[2].x, points[2].y,points[3].x, points[3].y);
+    //bezier(points[0].x, points[0].y,points[1].x, points[1].y,points[2].x, points[2].y,points[3].x, points[3].y);
+    bezier(points[0].x, points[0].y,(points[0].x+sin(time*orbitSpeed)*orbit), (points[0].y+cos(time*orbitSpeed)*orbit),points[2].x, points[2].y,points[3].x, points[3].y);
+
+    for (var i = 0; i < points.length; i++) {
+      ellipse(points[i].x, points[i].y,rad,rad);
+    }
+  }
+
+  function mousePressed() {
+    for (var i = 0; i < points.length; i++) {
+      //ellipse(points[i].x, points[i].y,10,10);
+      if (mouseX < points[i].x - rad || mouseX > points[i].x + rad || mouseY > points[i].y + rad || mouseY < points[i].y - rad) {
+      }else{
+        selected = i;
+        //console.log('click');
+      }
+    }
+  }
+  function mouseDragged() {
+    if (selected > -0.5) {
+      points[selected].x = mouseX;
+      points[selected].y = mouseY;
+    }
+
+  }
+  */
+
+  // =============== STOP WORKING HERE ==========================
+
+  </script>
+  <style>
+    body { padding: 0; margin: 5% 0 0; background-color: #333;}
+    canvas { margin: 0; }
+  </style>
+</head>
+<body>
+</body>
+</html>
+
