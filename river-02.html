@@ -1,0 +1,133 @@
+<html>
+<head>
+  <title>chain</title>
+  <script src="p5.min.js"></script>
+  <script>
+
+  //=============== DO ALL YOUR WORK HERE =======================
+  var IMAGE_WIDTH = 640;    // Don't change this.
+  var IMAGE_HEIGHT = 540;   // Don't change this.
+  /*
+  var time = 0;
+  var lastTime = 0;
+  var points = [{x: 50,y: 100},{x: 200,y: 100},{x: 200,y: 500},{x: 50,y: 500}];
+  var rad = 10;
+  var selected = -1;
+  var shade = 255;//102
+*/
+
+  var rad = 5;
+  var step = 10;
+  var wave = 0;
+
+  function setup() {
+    createCanvas(IMAGE_WIDTH, IMAGE_HEIGHT); // don't change this
+    //fill(0);
+    background(255);
+    noFill();
+
+    strokeWeight(1);
+
+    // more like points...
+    //var lines = [{x:10,y:10},{x:100,y:100},{x:200,y:50},{x:300,y:300}];//every other num is an x, || for y
+    var lines = [];
+    var dir = {x:1,y:1};
+    var lastP = {x:IMAGE_WIDTH/2, y:IMAGE_HEIGHT/2};
+
+    for (var i = 1; i < 10000; i++) {
+      //change dir
+      var seed = random();
+      if (seed < 0.333){
+        //change x
+        dir.x = dir.x * -1;
+      }else if(seed<0.667){
+        //change y
+        dir.y = dir.y * -1;
+      }else{}
+      //set new point
+      var point = {x:(lastP.x+dir.x*step),y:(lastP.y+dir.y*step)};
+      if (point.x>IMAGE_WIDTH){
+        point.x = IMAGE_WIDTH;
+      }
+      if (point.y>IMAGE_HEIGHT){
+        point.y = IMAGE_HEIGHT;
+      }
+      //randomize about point
+      var waveP = {x:(point.x+wave*noise(i)),y:(point.y+wave*noise(i))};
+      //push
+      lines.push(waveP);//{x:IMAGE_WIDTH*noise(i),y:IMAGE_HEIGHT*noise(1-i)});
+      //set lastP
+      lastP = point;
+    }
+///////////////////////////////
+    noStroke();
+    fill(50,50,2150);
+    for (var i = 1; i < lines.length-1; i++) {
+      ellipse(lines[i].x, lines[i].y,rad,rad);
+    }
+
+    //noFill();
+    fill(30,200,160,100);
+    stroke(0);
+    for (var i = 2; i < lines.length; i++) {
+      //find midpoint values between last two and second to last two...
+      var mid1 = {x:((lines[i-2].x+lines[i-1].x)/2),y:((lines[i-2].y+lines[i-1].y)/2)};
+      var mid2 = {x:((lines[i].x+lines[i-1].x)/2),y:((lines[i].y+lines[i-1].y)/2)};
+      //bezier(lines[i-2].x, lines[i-2].y,lines[i-1].x, lines[i-1].y,lines[i-1].x, lines[i-1].y,lines[i].x, lines[i].y);
+      bezier(mid1.x, mid1.y, lines[i-1].x, lines[i-1].y, lines[i-1].x, lines[i-1].y, mid2.x, mid2.y);
+    }
+
+
+///////////////////////////////
+
+
+
+  }
+/*
+  function draw() {
+    //clear();
+    background(shade,shade,shade,5);
+
+    lastTime = time;
+    time = millis();
+    dt = time-lastTime;
+
+    //curveTightness(noise(time/1000)*40 - 20);
+    //curve(points[0].x, points[0].y,points[1].x, points[1].y,points[2].x, points[2].y,points[3].x, points[3].y);
+    bezier(points[0].x, points[0].y,points[1].x, points[1].y,points[2].x, points[2].y,points[3].x, points[3].y);
+    for (var i = 0; i < points.length; i++) {
+      ellipse(points[i].x, points[i].y,rad,rad);
+    }
+  }
+
+  function mousePressed() {
+    for (var i = 0; i < points.length; i++) {
+      //ellipse(points[i].x, points[i].y,10,10);
+      if (mouseX < points[i].x - rad || mouseX > points[i].x + rad || mouseY > points[i].y + rad || mouseY < points[i].y - rad) {
+      }else{
+        selected = i;
+        //console.log('click');
+      }
+    }
+  }
+  function mouseDragged() {
+    if (selected > -0.5) {
+      points[selected].x = mouseX;
+      points[selected].y = mouseY;
+    }
+
+  }
+  */
+
+  // =============== STOP WORKING HERE ==========================
+
+  </script>
+  <style>
+    body { padding: 0; margin: 5% 0 0; background-color: #333;}
+    canvas { margin: 0; }
+  </style>
+</head>
+<body>
+</body>
+</html>
+
