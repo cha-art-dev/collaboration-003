@@ -1,0 +1,69 @@
+<html>
+<head>
+  <title>Art / Dev - Collaboration 3</title>
+  <script src="p5.min.js"></script>
+  <script>
+
+  //=============== DO ALL YOUR WORK HERE =======================
+
+
+  function setup() {
+      createCanvas(windowWidth, windowHeight); // don't change this
+
+      theWave();
+  }
+
+  function theWave() {
+      colorMode(HSB, 255);
+
+      var space = 100;
+      var iMax = 20;
+      var iSpace = space / iMax + 10;
+      var iHalf = iSpace / 2;
+
+      var startX = windowWidth / 2 - space / 2;
+
+      var myColor, x1, y1, cx1, cx2, cy1, cy2, x2, y2, i;
+
+      for(i = 0; i < iMax; i ++) {
+          myColor = color(100 + noise(i) * 100, 200, 150 + noise(i) * space);
+          noFill();
+          stroke(myColor);
+          strokeWeight(25);
+
+          x1 = startX + i * iHalf; y1 = windowHeight - 10;
+          cx1 = (startX + i * iSpace) + iSpace; cy1 = windowHeight / 2;
+          cx2 = (startX + i * iSpace) + iSpace; cy2 = windowHeight / 4;
+          x2 = startX + i * iHalf; y2 = iSpace + i * iMax;
+          bezier(x1, y1, cx1, cy1, cx2, cy2, x2, y2);
+      }
+
+      for(i = -iMax; i < 0; i ++) {
+          myColor = color(100 + noise(i) * 100, 200, 150 + noise(i) * space);
+          noFill();
+          stroke(myColor);
+          strokeWeight(25);
+
+          x1 = startX + i * iHalf; y1 = windowHeight - 10;
+          cx1 = (startX + i * iSpace) + iSpace; cy1 = windowHeight / 2;
+          cx2 = (startX + i * iSpace) + iSpace; cy2 = windowHeight / 4;
+          x2 = startX + i * iHalf; y2 = iSpace - i * iMax;
+          bezier(x1, y1, cx1, cy1, cx2, cy2, x2, y2);
+      }
+  }
+
+  function draw() {
+
+  }
+
+  // =============== STOP WORKING HERE ==========================
+
+  </script>
+  <style>
+    body { padding: 0; margin: 0; background-color: #333;}
+    canvas { margin: 0; }
+  </style>
+</head>
+<body>
+</body>
+</html>
