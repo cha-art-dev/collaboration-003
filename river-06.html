@@ -1,0 +1,96 @@
+<html>
+<head>
+  <title>Art / Dev - Collaboration 3</title>
+  <script src="p5.min.js"></script>
+  <script>
+
+  //=============== DO ALL YOUR WORK HERE =======================
+  var IMAGE_WIDTH = 640;    // Don't change this.
+  var IMAGE_HEIGHT = 540;   // Don't change this.
+
+  var X = 200;
+  var Y = 200;
+  var rad = 10;
+
+  var incAng = 0.5;
+  var lastT = 0;
+
+  function initSpiral() {
+    window.length = 1;
+    window.p = {x: IMAGE_WIDTH/2, y: IMAGE_HEIGHT/2};
+    window.ang = 0;
+
+    //window.lastT = 0;
+    //window.incAng = 0.5;
+  }
+  
+  function setup() {
+    createCanvas(IMAGE_WIDTH, IMAGE_HEIGHT); // don't change this
+    fill(0);
+    //noFill();
+    stroke(0);
+    strokeWeight(2);
+    background(255);
+
+
+    //new p5.Element('<div>hi</div>');
+
+    //line
+    initSpiral();
+    angain();
+    //again();
+  }
+
+  function draw() {
+    var time = millis();
+    background(255,255,255,3);
+    //console.log('time: '+time+', '+lastT);
+    if (time-lastT > 500) {
+      lastT = time;
+      
+      //clear();
+      background(255);
+      initSpiral();
+      incAng += 0.01;
+
+      if(p.x < IMAGE_WIDTH){
+        console.log('draw');
+        angain();
+      }
+    }
+  }
+
+  function again() {
+    ellipse(X,Y,rad,rad);
+
+    if (X < IMAGE_WIDTH){
+      X += 1;
+      Y += 1;
+      again();
+    }
+  }
+
+  function angain() {
+    length += 1;
+    ang += incAng;
+    var lastP = p;
+    p = {x:(lastP.x+sin(ang)*length),y:(lastP.y+cos(ang)*length)};
+    line(lastP.x,lastP.y,p.x,p.y);
+
+    if(p.x < IMAGE_WIDTH){
+      angain();
+    }
+  }
+
+  // =============== STOP WORKING HERE ==========================
+
+  </script>
+  <style>
+    body { padding: 0; margin: 5% 0 0; background-color: #333;}
+    canvas { margin: 0; }
+  </style>
+</head>
+<body>
+</body>
+</html>
+
