@@ -1,0 +1,65 @@
+<html>
+<head>
+  <title>Art / Dev - Collaboration 3</title>
+  <script src="p5.min.js"></script>
+  <script>
+
+  //=============== DO ALL YOUR WORK HERE =======================
+  var IMAGE_WIDTH = 640;    // Don't change this.
+  var IMAGE_HEIGHT = 540;   // Don't change this.
+
+  var X = 200;
+  var Y = 200;
+  var rad = 10;
+
+  var length = 1;
+  var p = {x: IMAGE_WIDTH/2, y: IMAGE_HEIGHT/2};
+  var ang = 0;
+  
+  function setup() {
+    createCanvas(IMAGE_WIDTH, IMAGE_HEIGHT); // don't change this
+    fill(0);
+    //noFill();
+    stroke(0);
+    strokeWeight(5);
+    background(255);
+
+    line
+    angain();
+    //again();
+  }
+
+  function again() {
+    ellipse(X,Y,rad,rad);
+
+    if (X < IMAGE_WIDTH){
+      X += 1;
+      Y += 1;
+      again();
+    }
+  }
+
+  function angain() {
+    length += 1;
+    ang += 1;
+    var lastP = p;
+    p = {x:(lastP.x+sin(ang)*length),y:(lastP.y+cos(ang)*length)};
+    line(lastP.x,lastP.y,p.x,p.y);
+
+    if(p.x < IMAGE_WIDTH){
+      angain();
+    }
+  }
+
+  // =============== STOP WORKING HERE ==========================
+
+  </script>
+  <style>
+    body { padding: 0; margin: 5% 0 0; background-color: #333;}
+    canvas { margin: 0; }
+  </style>
+</head>
+<body>
+</body>
+</html>
+
