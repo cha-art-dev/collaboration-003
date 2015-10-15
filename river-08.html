@@ -6,6 +6,57 @@
 
   //=============== DO ALL YOUR WORK HERE =======================
 
+  var X = 200;
+  var Y = 200;
+  var rad = 10;
+
+  var incAng = 0.1;//0.5;
+  var lastT = 0;
+
+  function initSpiral() {
+    window.length = 1;
+    window.p = {x: window.innerWidth/2, y: window.innerHeight/2};
+    window.ang = 0;
+  }
+
+  function angain() {
+    length += 1;
+    ang -= incAng;
+    //stroke(125+125*cos(ang*ang),0,125+125*(sin(ang*ang)+cos(ang*ang)));//125+125*sin(ang));//125+125*(sin(ang)+cos(ang))
+    stroke(125+125*cos(500*ang/length),0,125+125*(sin(500*ang/length)+cos(500*ang/length)));
+    var lastP = p;
+    p = {x:(lastP.x+sin(ang)*length),y:(lastP.y+cos(ang)*length)};
+    //line(lastP.x,lastP.y,p.x,p.y);
+    var edge = {p1x:lastP.x,p1y:lastP.y,p2x:p.x,p2y:p.y};
+    bump(edge);
+
+
+    if(p.x < window.innerWidth){
+      angain();
+    }
+  }
+
+  function draw() {
+    var time = millis();
+    background(255,255,255,3);
+    //console.log('time: '+time+', '+lastT);
+    if (time-lastT > 1000) {
+      lastT = time;
+      
+      //clear();
+      background(255);
+      initSpiral();
+      incAng += 0.05;
+
+      if(p.x < window.innerWidth){
+        //console.log('draw');
+        angain();
+      }
+    }
+  }
+
+
+//////// below is the triangle fractal, above is spiral fractal
 
   var posY = window.innerHeight * 4/5;
   var edge = {p1x:0,p1y:posY,p2x:window.innerWidth,p2y:posY};
@@ -16,7 +67,9 @@
     stroke(0);
     background(255);
 
-    bump(edge);
+    //bump(edge);
+    initSpiral();
+    //angain();
   }
 
   function bump(e){
@@ -29,19 +82,30 @@
 
     /// stupid trickery due to flipped axes and trig crap
     if (e.p2x < e.p1x) {
-      var bp = {x:e.p1x+dx/2+bh*sin(ang), y:e.p1y+dy/2+bh*cos(ang)};
+      var flip = -1;
+      //var bp = {x:e.p1x+dx/3+bh*sin(ang), y:e.p1y+dy/3+2*bh*cos(ang)};
     }else{
-      var bp = {x:e.p1x+dx/2+bh*sin(ang), y:e.p1y+dy/2-bh*cos(ang)};
+      var flip = 1;
+      //var bp = {x:e.p1x+dx/3+bh*sin(ang), y:e.p1y+dy/3-2*bh*cos(ang)};
     }
+    var bp = {x:e.p1x+dx/3+bh*sin(ang), y:e.p1y+dy/3-flip*bh*cos(ang)};
+
+    /// make spiraly?
+    var pi1 = {x:e.p1x+dx/3+bh/3*sin(ang), y:e.p1y+dy/3-flip*bh/3*cos(ang)};
+    ///
 
     var edges = [
-      {p1x:e.p1x, p1y:e.p1y, p2x:e.p1x+dx/3, p2y:e.p1y+dy/3},
-      {p1x:e.p1x+dx/3, p1y:e.p1y+dy/3, p2x:bp.x, p2y:bp.y},
+      //{p1x:e.p1x, p1y:e.p1y, p2x:e.p1x+dx/3, p2y:e.p1y+dy/3},
+      {p1x:e.p1x, p1y:e.p1y, p2x:pi1.x, p2y:pi1.y},
+
+      //{p1x:e.p1x+dx/3, p1y:e.p1y+dy/3, p2x:bp.x, p2y:bp.y},
+      {p1x:pi1.x, p1y:pi1.y, p2x:bp.x, p2y:bp.y},
+
       {p1x:bp.x, p1y:bp.y, p2x:e.p1x+2*dx/3, p2y:e.p1y+2*dy/3},
       {p1x:e.p1x+2*dx/3, p1y:e.p1y+2*dy/3, p2x:e.p2x, p2y:e.p2y}
     ];
 
-    if (d > 1) {
+    if (d > 10) {
       for (var i=0; i<edges.length; i++) {
         stroke(0);
         line(edges[i].p1x,edges[i].p1y,edges[i].p2x,edges[i].p2y);

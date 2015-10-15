@@ -1,0 +1,58 @@
+<html>
+<head>
+  <title>Art / Dev - Collaboration 3</title>
+  <script src="p5.min.js"></script>
+  <script>
+
+  //=============== DO ALL YOUR WORK HERE =======================
+
+// artdev talk notes
+  // try to do collaboration
+  // simple, one function, vector addition based, collaboratable
+
+  // colaboration ideas:
+    // - everyone builds a model based around an origin point
+    // - build overall model to govern movement of origin points
+      // could be the same "lazy suzan" base model
+
+  function setup() {
+    createCanvas(windowWidth, windowHeight); // don't change this
+
+    //noStroke();
+    stroke(0);
+    strokeWeight(5);
+    background(255);
+
+    //playing around with p5 vectors
+    var origin = createVector(200,200);
+    console.log(origin.x);
+    var v1 = createVector(100,200);
+    var oo2v1 = origin.add(v1);// actually changes the value of origin
+    console.log(oo2v1.x);
+
+    line(origin.x, origin.y, oo2v1.x, oo2v1.y);
+    console.log(origin.x+' '+origin.y+' '+oo2v1.x+' '+oo2v1.y);
+    line(0,0,100,100);
+  }
+/*
+  function draw() {
+    clear();
+    var cx = windowWidth/2, cy = windowHeight/2;
+    //when using p5 vectors, use atan2 to get the angle
+    var a = atan2(mouseY - cy, mouseX - cx);
+    fill(255);
+    var r = 200;
+    ellipse(cx + r*cos(a), cy + r*sin(a), 20, 20);
+  }
+*/
+  // =============== STOP WORKING HERE ==========================
+
+  </script>
+  <style>
+    body { padding: 0; margin: 5% 0 0; background-color: #333;}
+    canvas { margin: 0; }
+  </style>
+</head>
+<body>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<html>
+<head>
+  <title>Art / Dev - Collaboration 3</title>
+  <script src="p5.min.js"></script>
+  <script>
+
+  //=============== DO ALL YOUR WORK HERE =======================
+
+
+  o = { x:100, y:100 };//origin (normal addition)
+  //o = { x:300, y:400 };//origin (subtraction, or addition of negative)
+
+  //*** change the x and y values and see what happens
+  vector1 = { x:200, y:200 };// a vector
+  //vector1 = { x:-200, y:-300 };// negative version of vector1
+  vector2 = { x: 300, y:100 };
+  //vector addition: add x components and y components
+  vector1p2 = { x:vector1.x + vector2.x, y:vector1.y + vector2.y };//added vector1 to vector2
+
+
+  function setup() {
+    createCanvas(windowWidth, windowHeight); // don't change this
+
+    //noStroke();
+    //strokeWeight(3);
+    
+  }
+
+  function draw() {
+    clear();//wipe the canvas
+    background(255);
+    strokeWeight(3);//for thicker lines
+
+    //draw axes
+    textStyle(ITALIC);
+    textSize(30);
+    line(0,o.y,windowWidth,o.y);//x-axis
+    text("X",windowWidth/2,o.y-20)
+    line(o.x,0,o.x,windowHeight);//y-axis
+    text("Y",o.x-50,windowHeight/2);
+
+    //draw vectors
+
+    stroke(255,0,0);//red for vector1
+    line(o.x, o.y, o.x+vector1.x, o.y+vector1.y);// vector line relative to origin
+    stroke(0,0,255);//blue for vector2
+    line(o.x, o.y, o.x+vector2.x, o.y+vector2.y);
+    stroke(255,0,255);//purple for vector1p2
+    line(o.x, o.y, o.x+vector1p2.x, o.y+vector1p2.y);
+
+    //draw parallelogram
+    strokeWeight(1);//for thinner lines
+    stroke(255,0,0,100);//red for vector1
+    line(o.x+vector2.x, o.y+vector2.y, o.x+vector2.x+vector1.x, o.y+vector2.y+vector1.y);// vector line relative to origin
+    stroke(0,0,255,100);//blue for vector2
+    line(o.x+vector1.x, o.y+vector1.y, o.x+vector1.x+vector2.x, o.y+vector1.y+vector2.y);
+
+  }
+
+  // =============== STOP WORKING HERE ==========================
+
+  </script>
+  <style>
+    body { padding: 0; margin: 5% 0 0; background-color: #333;}
+    canvas { margin: 0; }
+  </style>
+</head>
+<body>
+</body>
+</html>

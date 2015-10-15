@@ -19,6 +19,9 @@
   var rad = 5;
   var step = 10;
   var wave = -10;
+  var turning = 5;
+  var a = 0;
+
 
   function setup() {
     createCanvas(IMAGE_WIDTH, IMAGE_HEIGHT); // don't change this
@@ -31,18 +34,24 @@
     // more like points...
     //var lines = [{x:10,y:10},{x:100,y:100},{x:200,y:50},{x:300,y:300}];//every other num is an x, || for y
     var lines = [];
-    var dir = {x:1,y:1};
+    var dir = {x:0,y:0};
     var lastP = {x:IMAGE_WIDTH/2, y:IMAGE_HEIGHT/2};
 
-    for (var i = 1; i < 10000; i++) {
+    for (var i = 1; i < 1000; i++) {
+      //test
+      //console.log(noise(i)-0.5);
+      a += (noise(i)-0.5)*turning*sin(100*i);
+      step += (noise(pow(i,0.1))-0.5);
       //change dir
       var seed = random();
       if (seed < 0.333){
         //change x
-        dir.x = dir.x * -1;
+        //dir.x = dir.x + (noise(i)-0.5)*turning;
+        dir.x = sin(a);
       }else if(seed<0.667){
         //change y
-        dir.y = dir.y * -1;
+        //dir.y = dir.y + (noise(i)-0.5)*turning;
+        dir.y = cos(a);
       }else{}
       //set new point
       var point = {x:(lastP.x+dir.x*step),y:(lastP.y+dir.y*step)};
@@ -62,9 +71,11 @@
 ///////////////////////////////
     noStroke();
     fill(50,50,2150);
+    /*
     for (var i = 1; i < lines.length-1; i++) {
       ellipse(lines[i].x, lines[i].y,rad,rad);
     }
+    */
 
     //noFill();
     fill(30,200,160,100);

@@ -1,0 +1,117 @@
+<html>
+<head>
+  <title>Art / Dev - Collaboration 3</title>
+  <script src="p5.min.js"></script>
+  <script>
+
+  //=============== DO ALL YOUR WORK HERE =======================
+
+  function setup() {
+    createCanvas(windowWidth, windowHeight); // don't change this
+
+    //noStroke();
+    noFill();
+    stroke(0);
+    
+  }
+
+  function draw() {
+    background(200);
+
+    var o = {x:windowWidth/2,y:windowHeight/2};//origin
+    var v = {l:100,a:3*PI/2};//vector
+    //drawPetal(o,v.l,v.a,0);
+    //drawFlower(o,v,7,(mouseY-windowHeight)*PI/2/windowHeight);
+    var data = {
+      numPetals: 13,
+      o:o,
+      v:v,
+      height:150,
+      tilt:(mouseY-windowHeight)*PI/2/windowHeight,
+      turn:(mouseX-windowWidth)*PI/windowWidth
+    }
+    drawCup(data);
+  }
+
+
+  function drawPetal(origin,length,angle,tilt) {
+    var vector = {x:length*cos(angle),y:length*sin(angle)*cos(tilt)};
+    line(origin.x,origin.y,origin.x+vector.x,origin.y+vector.y);
+  }
+
+  function drawFlower(o,v,numPetals,tilt) {
+    var petalAngle = TWO_PI/numPetals;
+    for (var i=0; i<numPetals; i++){
+      drawPetal(o,v.l,v.a+petalAngle*i,tilt);
+    }
+  }
+
+  function vectopoint(v,tilt) {
+    if(tilt){
+      var vector = {x:v.l*cos(v.a),y:v.l*sin(v.a)*cos(tilt)};
+    }else{
+      var vector = {x:v.l*cos(v.a),y:v.l*sin(v.a)};
+    }
+    return vector;
+  }
+
+  function drawBezierS(data) {
+    var o2 = {
+      x:data.o.x,
+      y:data.o.y+data.height*sin(data.tilt)
+    };
+    var vector = vectopoint(data.v,data.tilt);
+    bezier(data.o.x,data.o.y,data.o.x+vector.x,data.o.y+vector.y,o2.x,o2.y,o2.x+vector.x,o2.y+vector.y);
+
+  }
+
+  function drawCup(data) {
+    var petalAngle = TWO_PI/data.numPetals;
+    for (var i=0; i<data.numPetals; i++){
+      var vector = {l:data.v.l,a:petalAngle*i+data.v.a};
+      var sdata = {
+        o:data.o,
+        height:data.height,
+        v:vector,
+        tilt:data.tilt,
+        turn:data.turn
+      };
+      //drawBezierS(sdata);
+      drawBezierSTurned(sdata);
+    }
+  }
+
+  function drawBezier(p1,v1,p2,v2) {
+    bezier(p1.x,p1.y,p1.x+v1.x,p1.y+v1.y,p2.x,p2.y,p2.x+v2.x,p2.y+v2.y);
+  }
+  function vecturn(v,turn) {
+    var length = sqrt(v.x*v.x+v.y*v.y);
+    var angle = atan2(v.y,v.x);
+    //console.log(angle);
+    var vturned = {l:length, a:angle+turn};
+    return vectopoint(vturned,null);
+  }
+  function drawBezierSTurned(data) {
+    var o2 = {
+      x:data.o.x,
+      y:data.o.y+data.height*sin(data.tilt)
+    };
+    var p2 = vecturn(o2,data.turn);
+    var vector = {l:data.v.l,a:data.v.a+data.turn};
+    var vecP = vectopoint(vector);
+    var vec = vecturn(vecP,data.turn);//NaN
+    console.log('o: '+data.o+', vec: '+vec+', p2: '+p2);
+    drawBezier(data.o,vec,p2,vec);
+
+  }
+  // =============== STOP WORKING HERE ==========================
+
+  </script>
+  <style>
+    body { padding: 0; margin: 5% 0 0; background-color: #333;}
+    canvas { margin: 0; }
+  </style>
+</head>
+<body>
+</body>
+</html>

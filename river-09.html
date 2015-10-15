@@ -8,20 +8,14 @@
   var IMAGE_WIDTH = 640;    // Don't change this.
   var IMAGE_HEIGHT = 540;   // Don't change this.
 
-  var X = 200;
-  var Y = 200;
-  var rad = 10;
-
-  var incAng = 0.5;
+  var incAng = 0;
   var lastT = 0;
+  //var count = 0;
 
   function initSpiral() {
     window.length = 1;
     window.p = {x: IMAGE_WIDTH/2, y: IMAGE_HEIGHT/2};
     window.ang = 0;
-
-    //window.lastT = 0;
-    //window.incAng = 0.5;
   }
   
   function setup() {
@@ -32,53 +26,41 @@
     strokeWeight(2);
     background(255);
 
-
-    //new p5.Element('<div>hi</div>');
-
-    //line
-    initSpiral();
-    angain();
-    //again();
   }
 
   function draw() {
     var time = millis();
-    background(255,255,255,3);
+    //background(255,255,255,3);
     //console.log('time: '+time+', '+lastT);
-    if (time-lastT > 200) {
+    if (time-lastT > 2000) {
       lastT = time;
       
       //clear();
       background(255);
-      initSpiral();
-      incAng += 0.01;
+      //initSpiral();
+      incAng += TWO_PI/24;
 
-      if(p.x < IMAGE_WIDTH){
-        console.log('draw');
-        angain();
-      }
+      //if(count < 10000){
+        //console.log('draw');
+      //count = 0;
+      angain(0,40,{x: IMAGE_WIDTH/2, y: IMAGE_HEIGHT/2},0);
+      //}
     }
   }
 
-  function again() {
-    ellipse(X,Y,rad,rad);
-
-    if (X < IMAGE_WIDTH){
-      X += 1;
-      Y += 1;
-      again();
-    }
-  }
-
-  function angain() {
+  function angain(ang,length,p,col) {
+    //count += 1;
     length += 1;
     ang += incAng;
     var lastP = p;
     p = {x:(lastP.x+sin(ang)*length),y:(lastP.y+cos(ang)*length)};
+    stroke(col);
     line(lastP.x,lastP.y,p.x,p.y);
 
-    if(p.x < IMAGE_WIDTH){
-      angain();
+    if(length < 50){
+      //angain(ang,length,p);
+      angain(ang-incAng,length,p,col+25);
+      angain(ang,length,p,col+25);
     }
   }
 

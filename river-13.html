@@ -1,0 +1,142 @@
+<html>
+<head>
+  <title>Art / Dev - Collaboration 3</title>
+  <script src="p5.min.js"></script>
+  <script>
+
+  //=============== DO ALL YOUR WORK HERE =======================
+
+
+  function createBall(num) {
+    var vel = 3 + Math.random()*5;
+    var ang = Math.random()*TWO_PI;
+    var recentCollisions = [];
+    for (var i=0; i<num; i++){
+      recentCollisions[i] = false;//0;
+    }
+    return {
+      rad: 50 + Math.random()*30,
+      x: windowWidth*Math.random(),
+      y: windowHeight*Math.random(),
+      vx: vel*sin(ang),
+      vy: 0,//vel*cos(ang)
+      reCol: recentCollisions,
+      col: [100,130+random()*70,100]
+    };
+  }
+
+  function bounceb(dx,dy,d,b1,b2){
+
+    //do math with momentum
+    var Uba = {x:dx/d,y:dy/d};//unit vector ball b(j) to ball a(i)
+    var Va1 = {x:b1.vx,y:b1.vy};
+    var dotUa = Va1.x*Uba.x+Va1.y*Uba.y;
+    var Vb1 = {x:b2.vx,y:b2.vy};
+    var dotUb = Vb1.x*Uba.x+Vb1.y*Uba.y;
+    var Van = {x:Uba.x*dotUa,y:Uba.y*dotUa};//normal
+    var Vat = {x:Va1.x-Van.x,y:Va1.y-Van.y};//tangent
+    var Vbn = {x:Uba.x*dotUb,y:Uba.y*dotUb};//normal
+    var Vbt = {x:Vb1.x-Vbn.x,y:Vb1.y-Vbn.y};//tangent
+    var ma = b1.rad*b1.rad;//mass (prop to area)
+    var Man = {x:Van.x*ma,y:Van.y*ma};//momentum
+    var mb = b2.rad*b2.rad;
+    var Mbn = {x:Vbn.x*mb,y:Vbn.y*mb};
+    var Va2 = {x:Vat.x+Mbn.x/ma,y:Vat.y+Mbn.y/ma};
+    var Vb2 = {x:Vbt.x+Man.x/mb,y:Vbt.y+Man.y/mb};
+    //update velocities
+    b1.vx = Va2.x;
+    b1.vy = Va2.y;
+    b2.vx = Vb2.x;
+    b2.vy = Vb2.y;
+    //extra step to avoid double collision
+    b1.x+=b1.vx;
+    b1.y+=b1.vy;
+    b2.x+=b2.vx;
+    b2.y+=b2.vy;
+    
+  }
+
+  function setup() {
+    createCanvas(windowWidth, windowHeight); // don't change this
+
+    //stroke(0);
+    fill(255);
+    background(50,50,200);
+
+    numBalls = 20;
+    balls = [];
+    for (var i=0; i<numBalls; i++){
+      balls.push(createBall(numBalls));
+    }
+  }
+
+  function draw() {
+    background(250,125,70);
+
+    //check wall collisions
+    for (var i=0; i<balls.length; i++){
+      if ( ((balls[i].x-balls[i].rad)<0 && balls[i].vx<0) || ((balls[i].x+balls[i].rad)>windowWidth && balls[i].vx>0) ){
+        balls[i].vx = -balls[i].vx;
+      }
+      if ( ((balls[i].y-balls[i].rad)<0 && balls[i].vy<0) || ((balls[i].y+balls[i].rad)>windowHeight && balls[i].vy>0) ){
+        balls[i].vy = -balls[i].vy;
+      }
+    }
+
+    //check collisions with other balls
+    for (var i=0; i<balls.length; i++){
+      for (var j=i+1; j<balls.length; j++){
+        var dx = balls[i].x-balls[j].x;
+        var dy = balls[i].y-balls[j].y;
+        var d = sqrt(dx*dx+dy*dy);
+        //handle changes for both balls
+        if ( d < (balls[i].rad+balls[j].rad)/2 ){
+          //collision detected
+          if (balls[i].reCol[j]){//>0){
+            //ignore collision
+          }else{
+            balls[i].reCol[j] = true;//1;//true     oldway: 20;
+            var v2i = bounceb(dx,dy,d,balls[i],balls[j]);
+          }
+        }else{
+          //they didn't collide, so decrement recol
+          balls[i].reCol[j] = false;//0;
+        }
+      }
+    }
+/*
+    //oldway: decrement reCol
+    for (var i=0; i<balls.length; i++) {
+      for (var j=0; j<numBalls; j++) {
+        //var reCol = balls[i].reCol[j];
+        if (balls[i].reCol[j]>0){
+          balls[i].reCol[j]-=1;
+        }
+      }
+    }
+*/
+    //move
+    for (var i=0; i<balls.length; i++){
+      balls[i].x+=balls[i].vx;
+      balls[i].y+=balls[i].vy;
+    }
+
+    //draw
+    for (var i=0; i<balls.length; i++){
+      fill(balls[i].col[0],balls[i].col[1],balls[i].col[2]);
+      ellipse(balls[i].x,balls[i].y,balls[i].rad,balls[i].rad);
+    }
+
+  }
+
+  // =============== STOP WORKING HERE ==========================
+
+  </script>
+  <style>
+    body { padding: 0; margin: 5% 0 0; background-color: #333;}
+    canvas { margin: 0; }
+  </style>
+</head>
+<body>
+</body>
+</html>

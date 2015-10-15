@@ -45,7 +45,7 @@
     var time = millis();
     background(255,255,255,3);
     //console.log('time: '+time+', '+lastT);
-    if (time-lastT > 500) {
+    if (time-lastT > 100) {
       lastT = time;
       
       //clear();
@@ -73,6 +73,8 @@
   function angain() {
     length += 1;
     ang += incAng;
+    //stroke(125+125*cos(ang*ang),0,125+125*(sin(ang*ang)+cos(ang*ang)));//125+125*sin(ang));//125+125*(sin(ang)+cos(ang))
+    stroke(125+125*cos(500*ang/length),0,125+125*(sin(500*ang/length)+cos(500*ang/length)));
     var lastP = p;
     p = {x:(lastP.x+sin(ang)*length),y:(lastP.y+cos(ang)*length)};
     line(lastP.x,lastP.y,p.x,p.y);

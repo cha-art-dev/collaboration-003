@@ -1,0 +1,98 @@
+<html>
+<head>
+  <title>Art / Dev - Collaboration 3</title>
+  <script src="p5.min.js"></script>
+  <script>
+
+  //=============== DO ALL YOUR WORK HERE =======================
+  var IMAGE_WIDTH = 700;//640;    // Don't change this.
+  var IMAGE_HEIGHT = 500;   // Don't change this.
+
+var scaled = 100;
+var tilt = 1;
+
+var petal = {
+  p1: {x:1,y:0},
+  c1: {x:2,y:0},
+  c2: {x:1,y:1},
+  p2: {x:0,y:1}
+};
+var origin = {x:(IMAGE_WIDTH/2),y:(IMAGE_HEIGHT/2)};
+
+function setup() {
+  createCanvas(IMAGE_WIDTH,IMAGE_HEIGHT);
+  background(255);
+  stroke(0);
+  noFill();
+
+
+  //bezier(petal.p1.x*scaled,petal.p1.y*scaled,petal.c1.x*scaled,petal.c1.y*scaled,petal.c2.x*scaled,petal.c2.y*scaled,petal.p2.x*scaled,petal.p2.y*scaled);
+  drawPetal(petal,origin);
+}
+
+function draw() {
+  clear();
+  background(255);
+  tilt = mouseY/IMAGE_HEIGHT;
+  drawPetal(petal,origin);
+}
+
+function drawPetal(petal,o,angle) {
+  bezier(o.x+petal.p1.x*scaled,o.y+petal.p1.y*scaled, o.x+petal.c1.x*scaled,o.y+petal.c1.y*scaled, o.x+petal.c2.x*scaled,o.y+petal.c2.y*scaled*tilt, o.x+petal.p2.x*scaled,o.y+petal.p2.y*scaled*tilt);
+
+}
+
+/*
+  var colors = [
+    [255,0,0],//red
+    [255,128,0],//orange
+    [255,255,0],//yellow
+    [0,255,0],//green
+    [0,0,255],//blue
+    [128,0,255]//purple
+  ];
+  
+  var slices = 20;
+  //var points = [{x: 50,y: 100},{x: 200,y: 100},{x: 200,y: 500},{x: 50,y: 500}];
+  var o = {x:IMAGE_WIDTH/2,y:3*IMAGE_HEIGHT/5};
+  //var points = [{x: 50,y: 100},{x: 200,y: 100},{x: 200,y: 500},{x: o.x,y: o.y}];
+  var orbit = 70;//radius of orbit
+  var petals = 6;
+  var pheight = 100;
+  var plength = 300;
+  var perspective = 0.6;
+
+  function setup() {
+    createCanvas(IMAGE_WIDTH, IMAGE_HEIGHT); // don't change this
+    noFill();
+    background(255);
+    strokeWeight(3);
+    //var ang = TWO_PI*p/slices;
+    for (var p=0; p < petals; p++){
+      var angP = TWO_PI*(p+0.3)/petals;
+      stroke(colors[p][0],colors[p][1],colors[p][2]);
+      for (var i = 0; i < slices; i++) {
+        var angI = TWO_PI*i/slices;
+        //ellipse((IMAGE_WIDTH/2+sin(ang)*orbit), (IMAGE_HEIGHT/2+cos(ang)*orbit),rad,rad);
+        //bezier(points[0].x, points[0].y,(points[0].x+sin(angI)*orbit), (points[0].y+cos(angI)*orbit),(points[3].x+sin(angP)*orbit), (points[3].y+cos(angP)*orbit),points[3].x, points[3].y);
+        bezier((o.x+sin(angP)*plength), (o.y+cos(angP)*perspective*plength-pheight),(o.x+sin(angI)*orbit), (o.y+cos(angI)*perspective*orbit),(o.x+sin(angP)*plength), (o.y+cos(angP)*perspective*plength),o.x, o.y);
+        line((o.x+sin(angP)*plength), (o.y+cos(angP)*perspective*plength-pheight),(o.x+sin(angI)*orbit), (o.y+cos(angI)*orbit));
+      }
+    }
+    noStroke();
+    fill(255);
+    ellipse(o.x,o.y,20,(20*perspective));
+
+  }
+  */
+  // =============== STOP WORKING HERE ==========================
+
+  </script>
+  <style>
+    body { padding: 0; margin: 5% 0 0; background-color: #333;}
+    canvas { margin: 0; }
+  </style>
+</head>
+<body>
+</body>
+</html>

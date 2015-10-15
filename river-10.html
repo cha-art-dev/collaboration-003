@@ -1,0 +1,82 @@
+<html>
+<head>
+  <title>Art / Dev - Collaboration 3</title>
+  <script src="p5.min.js"></script>
+  <script>
+
+  //=============== DO ALL YOUR WORK HERE =======================
+
+  var o = {//   (1) set origin on canvas
+    x: window.innerWidth/2,
+    y: window.innerHeight/2
+  };
+
+  var vector = {//    (2) make vector
+    l: 200, //length (or magnitude)
+    a: 0 //angle    *note: 360 deg == 2*pi rad, p5 uses rad
+  };
+
+  function setup() {
+    createCanvas(windowWidth, windowHeight); // don't change this
+
+    //noStroke();
+    background(255);
+    noFill(); 
+
+    line(0,0,o.x,o.y);
+  }
+
+  function draw() {
+    // (2)
+    sketch();
+  }
+
+  function sketch() {//origin,length,angle) {
+    //prep for draw
+    background(255,5);// necessary after step 3, helps visuals at step 5
+
+    // (4)
+    vector.a += 0.1; // (4) increase the angle over time *note: this is where the true power of the vector based model is realized
+    // angle is from 0 to TWO_PI
+
+    /* (3)
+    var vectorP = {//    (3) project vector to canvas
+      x: o.x + vector.l * cos(vector.a),
+      y: o.y + vector.l * sin(vector.a)
+    };
+    */
+    // replace above with below
+    // /*
+    var perspective = mouseY/windowHeight * PI/2; //perspective angle based on mouse position
+    var vectorP = {//    (5) project vector to canvas with perspective (using z axis)
+      x: o.x + vector.l * cos(vector.a),
+      y: o.y + vector.l * sin(vector.a) * sin(perspective) 
+    };
+    // */
+
+    /*
+    line(o.x,o.y,vectorP.x,vectorP.y);//use until step 6
+    */
+    // replace above with below at step (6)
+    // /* (6)
+    var yoff = vector.l * cos(perspective)// y offset due to perspective
+    //line(o.x,o.y,vectorP.x,vectorP.y,vectorP.x);
+    //line(vectorP.x,vectorP.y-yoff,o.x,o.y-yoff);
+    //quad(o.x,o.y,vectorP.x,vectorP.y,vectorP.x,vectorP.y-yoff,o.x,o.y-yoff); //(6)
+    //bezier(o.x,o.y,vectorP.x,vectorP.y,vectorP.x,vectorP.y-yoff,o.x,o.y-yoff); // (7)
+    bezier(o.x,o.y,vectorP.x,vectorP.y,o.x,o.y-yoff,vectorP.x,vectorP.y-yoff); // (8) flip some points around
+    // */
+    //ellipse(vectorP.x,vectorP.y,10,10) // draw circle at vectorP
+  }
+
+  // =============== STOP WORKING HERE ==========================
+
+  </script>
+  <style>
+    body { padding: 0; margin: 5% 0 0; background-color: #333;}
+    canvas { margin: 0; }
+  </style>
+</head>
+<body>
+</body>
+</html>
