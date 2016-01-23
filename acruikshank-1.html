@@ -1,0 +1,56 @@
+<html>
+<head>
+  <title>Art / Dev - Collaboration 2</title>
+  <script src="p5.min.js"></script>
+  <script>
+
+  //=============== DO ALL YOUR WORK HERE =======================
+
+  var ITERATIONS = 50;
+
+  function setup() {
+    createCanvas(windowWidth, windowHeight); // don't change this
+
+    colorMode(HSB, 1)
+    noFill();
+
+    var points = [];
+    for (var i=0; i<5; i++)
+      points.push([lerp(0,windowWidth,random()), lerp(0,windowHeight,random())])
+    var corners = choose(points, 4);
+
+    for (var i=0; i < ITERATIONS; i++) {
+      var x = lerp(0, windowWidth, i/ITERATIONS);
+      var y = lerp(0, windowHeight, i/ITERATIONS);
+      corners.forEach(function(c,j) {
+        stroke(j/corners.length,.8,1,.1);
+        var c1x = lerp(c[1][0], c[2][0], i/ITERATIONS);
+        var c1y = lerp(c[1][1], c[2][1], i/ITERATIONS);
+        var c2x = lerp(c[2][0], c[1][0], i/ITERATIONS);
+        var c2y = lerp(c[2][1], c[1][1], i/ITERATIONS);
+        bezier(c[0][0], c[0][1], c1x, c1y, c2x, c2y, c[3][0], c[3][1] );
+      })
+    }
+  }
+
+  function choose(set, n) {
+    if (n < 1) return null;
+    if (n == 1) return set.map(function(i) { return [i]; });
+    return set.reduce(function(all,item,i) {
+      var rest = set.slice(0);
+      rest.splice(i,1);
+      return all.concat(choose(rest, n-1).map(function(perm) {return [item].concat(perm)}));
+    }, [])
+  }
+
+  // =============== STOP WORKING HERE ==========================
+
+  </script>
+  <style>
+    body { padding: 0; margin: 0; background-color: #333;}
+    canvas { margin: 0; }
+  </style>
+</head>
+<body>
+</body>
+</html>

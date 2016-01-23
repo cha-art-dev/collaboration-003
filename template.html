@@ -1,6 +1,6 @@
 <html>
 <head>
-  <title>Art / Dev - Collaboration 3</title>
+  <title>Art / Dev - Collaboration 2</title>
   <script src="p5.min.js"></script>
   <script>
 
@@ -10,10 +10,16 @@
     createCanvas(windowWidth, windowHeight); // don't change this
 
     noStroke();
+    colorMode(HSB,1);
+
+    for (var i=500; i>=0; i--) {
+      var x = noise(i/2000 + (millis()%10000)/100)-.5;
+      var y = noise(i/2000 + 2 + (millis()%10000)/100)-.5;
+      fill(noise(x,y)/8,1,1,.4);
+      ellipse(windowWidth/2 + 1000*x, windowHeight/2 + 1000*y, 5,5);
+    }
   }
 
-  function draw() {
-  }
 
   // =============== STOP WORKING HERE ==========================
 
